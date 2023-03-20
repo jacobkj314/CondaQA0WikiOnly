@@ -20,6 +20,7 @@ filenames = ["./condaqa_train.json", "./condaqa_dev.json", "./condaqa_test.json"
 
 for filename in filenames:
     data = []
+    gold = [] # # # I also need to filter out the gold answer keys
     with open(filename) as f:
         for line in f:
             '''data.append(json.loads(line))''' # # # This was here before - changing it to keep only original text from wikipedia
@@ -27,6 +28,7 @@ for filename in filenames:
             sample = json.loads(line)
             if sample["PassageEditID"] == 0:
                 data.append(sample)
+                gold.append(sample)
             # # # End of my replacement
 
     t5_samples = [{"input": normalize_text(sample["sentence2"].replace("\n", " ")) + " \\n " + normalize_text(
@@ -38,3 +40,4 @@ for filename in filenames:
     print(t5_filename)
 
     write_data(t5_samples, t5_filename)
+    write_data(gold, filename) # # #
