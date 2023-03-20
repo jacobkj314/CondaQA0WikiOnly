@@ -22,7 +22,12 @@ for filename in filenames:
     data = []
     with open(filename) as f:
         for line in f:
-            data.append(json.loads(line))
+            '''data.append(json.loads(line))''' # # # This was here before - changing it to keep only original text from wikipedia
+            # # # This is my replacement, which checks that PassageEditID is 0
+            sample = json.loads(line)
+            if sample["PassageEditID"] == 0:
+                data.append(sample)
+            # # # End of my replacement
 
     t5_samples = [{"input": normalize_text(sample["sentence2"].replace("\n", " ")) + " \\n " + normalize_text(
         sample["sentence1"].replace("\n", " ")),
