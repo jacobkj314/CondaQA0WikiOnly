@@ -123,7 +123,8 @@ def compute_consistency(pred_file, data_file, label_key="label"):
                 consistency_dict["0-" + str(contrast_edit)]["total"] += 1
 
     for key in consistency_dict:
-        consistency_dict[key]["consistency"] = consistency_dict[key]["correct"] * 100.0 / consistency_dict[key]["total"]
+        # # # consistency_dict[key]["consistency"] = consistency_dict[key]["correct"] * 100.0 / consistency_dict[key]["total"]
+        consistency_dict[key]["consistency"] = consistency_dict[key]["correct"] * 100.0 / consistency_dict[key]["total"] if consistency_dict[key]["total"] else 0.0 # # # just set the score to 0 if there are none of that one, as for any of the edits
 
     return consistency_dict["all"]["consistency"], consistency_dict["0-1"]["consistency"], consistency_dict["0-2"][
         "consistency"], consistency_dict["0-3"]["consistency"]
